@@ -5,27 +5,27 @@ Purpose of TGRestful is to provide pure REST examples for any thin or thick clie
 Project is being hosted @ http://amd.techgrains.com:8083/TGRESTful/ {...} for quick test without seeing the implementation.
 
 ## RESTful Examples
-|Method|URI|Description|Success|Failure|
-|:--:|:--|:--|:--|:--|
-|`GET`|/employee/1|Employee having id {1}|**200** OK|**404** Not Found|
-|`GET`|/employee/1/department/list|Employee having id {1}|**200** OK|**404** Not Found|
-|`GET`|/employee/list|List of employees|**200** OK|
-|`GET`|/employee/list?name=Vishal|Filtered list of employees based on name contains {Vishal}|**200** OK|
-|`POST`|/employee/create|Creates Employee based on request params |**200** OK or **201** Created|**409** Conflict|
-|`POST`|/employee/1/department/add|Adds Departments based on request params |**200** OK or **201** Created|**403** Forbidden, **404** Not Found|
-|`PUT`|/employee/5|Updates all the entity attributes based on request params. |**200** OK|**403** Forbidden, **404** Not Found, **409** Conflict|
-|`PATCH`|/employee/5|Updates Employee for only provided request params.|**200** OK|**403** Forbidden, **404** Not Found, **409** Conflict|
-|`DELETE`|/employee/5|Deletes Employee based on request params |**200** OK or **204** No Content|**404** Not Found|
-|`DELETE`|/employee/5/department/12|Deletes Department based on request params |**200** OK or **204** No Content|**404** Not Found|
+|No|Method|URI|Description|Success|Failure|
+|:--:|:--:|:--|:--|:--|:--|
+|1|`GET`|[/employee/1](http://amd.techgrains.com:8083/TGRESTful/employee/1)|Details of Employee having id 1|**200** OK|**404** Not Found|
+|2|`GET`|[/employee/3/department/list](http://amd.techgrains.com:8083/TGRESTful/employee/3/department/list)|List of departments associated to Employee having id 3|**200** OK|**404** Not Found|
+|3|`GET`|[/employee/list](http://amd.techgrains.com:8083/TGRESTful/employee/list)|List of employees|**200** OK|
+|4|`GET`|[/employee/list?name=Vishal](http://amd.techgrains.com:8083/TGRESTful/employee/list?name=Vishal)|Filtered list of employees based on name contains {Vishal}|**200** OK|
+|5|`POST`|/employee/create|Creates Employee based on request params |**200** OK or **201** Created|**409** Conflict|
+|6|`POST`|/employee/1/department/add|Adds Departments based on request params |**200** OK or **201** Created|**403** Forbidden, **404** Not Found|
+|7|`PUT`|/employee/5|Updates all the entity attributes based on request params. |**200** OK|**403** Forbidden, **404** Not Found, **409** Conflict|
+|8|`PATCH`|/employee/5|Updates Employee for only provided request params.|**200** OK|**403** Forbidden, **404** Not Found, **409** Conflict|
+|9|`DELETE`|/employee/5|Deletes Employee based on request params |**200** OK or **204** No Content|**404** Not Found|
+|10|`DELETE`|/employee/5/department/12|Deletes Department based on request params |**200** OK or **204** No Content|**404** Not Found|
 
 > `Head` and `Options` are available for any request.
 > 
 > `5XX` Status code may occur to any service based on connectivity and availablity of the instances which is indepedent to above examples.
 
-### Request & Response
-#### `GET` /employee/{id}
+## Request & Response
+#### 1. `GET` /employee/{id}
 
-**HTTP 200** : /employee/1
+**HTTP 200** : [/employee/1](http://amd.techgrains.com:8083/TGRESTful/employee/1)
 ```
 {
   "id": 1,
@@ -39,7 +39,7 @@ Project is being hosted @ http://amd.techgrains.com:8083/TGRESTful/ {...} for qu
   ]
 }
 ```
-**HTTP 404** /employee/100
+**HTTP 404** : [/employee/100](http://amd.techgrains.com:8083/TGRESTful/employee/100)
 ```
 {
   "timestamp": 1491553092124,
@@ -49,8 +49,8 @@ Project is being hosted @ http://amd.techgrains.com:8083/TGRESTful/ {...} for qu
 }
 ```
 
-#### `GET` /employee/{id}/department/list
-**HTTP 200** : /employee/1/department/list
+#### 2. `GET` /employee/{id}/department/list
+**HTTP 200** : [/employee/3/department/list](http://amd.techgrains.com:8083/TGRESTful/employee/3/department/list)
 ```
 [
   {
@@ -67,7 +67,7 @@ Project is being hosted @ http://amd.techgrains.com:8083/TGRESTful/ {...} for qu
   }
 ]
 ```
-**HTTP 404** : /employee/100/department/list
+**HTTP 404** : [/employee/100/department/list](http://amd.techgrains.com:8083/TGRESTful/employee/100/department/list)
 ```
 {
   "timestamp": 1491548677115,
@@ -77,10 +77,10 @@ Project is being hosted @ http://amd.techgrains.com:8083/TGRESTful/ {...} for qu
 }
 ```
 
-#### `GET` /employee/list
+#### 3. & 4. `GET` /employee/list
 *Request params: name={name}, designation={designation}*
 
-**HTTP 200** : /employee/list?name=Snehal
+**HTTP 200** : [/employee/list?name=Snehal](http://amd.techgrains.com:8083/TGRESTful/employee/list?name=Snehal)
 ```
 [
   {
@@ -96,8 +96,9 @@ Project is being hosted @ http://amd.techgrains.com:8083/TGRESTful/ {...} for qu
   }
 ]
 ```
+*Not putting link for further examples, considering those were not `GET` requests. It can be generated similary just by changing the uri path.*
 
-#### `POST` /employee/create 
+#### 5. `POST` /employee/create 
 *Request params: name={name}, designation={designation}*
 
 **HTTP 200** : /employee/create (name=Karan, designation=Manager)
@@ -119,7 +120,7 @@ Project is being hosted @ http://amd.techgrains.com:8083/TGRESTful/ {...} for qu
 }
 ```
 
-#### `POST` /employee/{id}/department/add 
+#### 6. `POST` /employee/{id}/department/add 
 
 *Request params: department={departmentCode}*
 
@@ -160,7 +161,7 @@ Project is being hosted @ http://amd.techgrains.com:8083/TGRESTful/ {...} for qu
 }
 ```
 
-#### `PUT` /employee/{id}
+#### 7. `PUT` /employee/{id}
 *Request params: name={name}, designation={designation} (Required all the parameters of the entity for PUT)*
 
 **HTTP 200** : /employee/5 (name=John, designation=Manager)
@@ -200,7 +201,7 @@ Project is being hosted @ http://amd.techgrains.com:8083/TGRESTful/ {...} for qu
 }
 ```
 
-#### `PATCH` /employee/{id}
+#### 8. `PATCH` /employee/{id}
 *Request params: name={name} (Any subset of parameters of the entity for PATCH)*
 
 **HTTP 200** : /employee/5 (name=John)
@@ -240,7 +241,7 @@ Project is being hosted @ http://amd.techgrains.com:8083/TGRESTful/ {...} for qu
 }
 ```
 
-#### `DELETE` /employee/{id}
+#### 9. `DELETE` /employee/{id}
 
 **HTTP 200** : /employee/1
 ```
@@ -257,7 +258,7 @@ Project is being hosted @ http://amd.techgrains.com:8083/TGRESTful/ {...} for qu
 }
 ```
 
-#### `DELETE` /employee/{id}/department/{departmentCode}
+#### 10. `DELETE` /employee/{id}/department/{departmentCode}
 
 **HTTP 200** : /employee/1/department/10
 ```
@@ -287,7 +288,7 @@ If you want to run project, its simple Java Spring Boot MVC project with Gradle.
 ``` 
 $ gradle bootRun
 ```
-By default it runs usuing port `8080` on local.
+By default it runs using port `8080` on local.
 
 ### Implementation
 Code base already has example server side implementation of this RESTful services.
