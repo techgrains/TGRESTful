@@ -1,0 +1,305 @@
+<h1 id="tg-restful-examples">TG RESTful Examples</h1>
+<p>Purpose of TGRestful is to provide pure REST examples for any thin or thick client API integration. (Android app, iOS app, JS framework like AngularJS etc.)</p>
+<h2 id="how-to-use-restful-services-directly-">How to use RESTful services directly?</h2>
+<p>Project is being hosted @ <a href="http://amd.techgrains.com:8083/TGRESTful/">http://amd.techgrains.com:8083/TGRESTful/</a> {...} for quick test without seeing the implementation.</p>
+<h2 id="restful-examples">RESTful Examples</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Method</th>
+<th style="text-align:left">URI</th>
+<th style="text-align:left">Description</th>
+<th style="text-align:left">Success</th>
+<th style="text-align:left">Failure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>GET</code></td>
+<td style="text-align:left">/employee/1</td>
+<td style="text-align:left">Employee having id {1}</td>
+<td style="text-align:left"><strong>200</strong> OK</td>
+<td style="text-align:left"><strong>404</strong> Not Found</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>GET</code></td>
+<td style="text-align:left">/employee/1/department/list</td>
+<td style="text-align:left">Employee having id {1}</td>
+<td style="text-align:left"><strong>200</strong> OK</td>
+<td style="text-align:left"><strong>404</strong> Not Found</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>GET</code></td>
+<td style="text-align:left">/employee/list</td>
+<td style="text-align:left">List of employees</td>
+<td style="text-align:left"><strong>200</strong> OK</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>GET</code></td>
+<td style="text-align:left">/employee/list?name=Vishal</td>
+<td style="text-align:left">Filtered list of employees based on name contains {Vishal}</td>
+<td style="text-align:left"><strong>200</strong> OK</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>POST</code></td>
+<td style="text-align:left">/employee/create</td>
+<td style="text-align:left">Creates Employee based on request params</td>
+<td style="text-align:left"><strong>200</strong> OK or <strong>201</strong> Created</td>
+<td style="text-align:left"><strong>409</strong> Conflict</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>POST</code></td>
+<td style="text-align:left">/employee/1/department/add</td>
+<td style="text-align:left">Adds Departments based on request params</td>
+<td style="text-align:left"><strong>200</strong> OK or <strong>201</strong> Created</td>
+<td style="text-align:left"><strong>403</strong> Forbidden, <strong>404</strong> Not Found</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>PUT</code></td>
+<td style="text-align:left">/employee/5</td>
+<td style="text-align:left">Updates all the entity attributes based on request params.</td>
+<td style="text-align:left"><strong>200</strong> OK</td>
+<td style="text-align:left"><strong>403</strong> Forbidden, <strong>404</strong> Not Found, <strong>409</strong> Conflict</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>PATCH</code></td>
+<td style="text-align:left">/employee/5</td>
+<td style="text-align:left">Updates Employee for only provided request params.</td>
+<td style="text-align:left"><strong>200</strong> OK</td>
+<td style="text-align:left"><strong>403</strong> Forbidden, <strong>404</strong> Not Found, <strong>409</strong> Conflict</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>DELETE</code></td>
+<td style="text-align:left">/employee/5</td>
+<td style="text-align:left">Deletes Employee based on request params</td>
+<td style="text-align:left"><strong>200</strong> OK or <strong>204</strong> No Content</td>
+<td style="text-align:left"><strong>404</strong> Not Found</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>DELETE</code></td>
+<td style="text-align:left">/employee/5/department/12</td>
+<td style="text-align:left">Deletes Department based on request params</td>
+<td style="text-align:left"><strong>200</strong> OK or <strong>204</strong> No Content</td>
+<td style="text-align:left"><strong>404</strong> Not Found</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><code>Head</code> and <code>Options</code> are available for any request.</p>
+<p><code>5XX</code> Status code may occur to any service based on connectivity and availablity of the instances which is indepedent to above examples.</p>
+</blockquote>
+<h3 id="request-response">Request &amp; Response</h3>
+<h4 id="-get-employee-id-"><code>GET</code> /employee/{id}</h4>
+<p><strong>HTTP 200</strong> : /employee/1</p>
+<pre><code>{
+  &quot;id&quot;: 1,
+  &quot;name&quot;: &quot;Vishal&quot;,
+  &quot;designation&quot;: &quot;Director&quot;,
+  &quot;departments&quot;: [
+    {
+      &quot;code&quot;: 10,
+      &quot;name&quot;: &quot;IT&quot;
+    }
+  ]
+}
+</code></pre><p><strong>HTTP 404</strong> /employee/100</p>
+<pre><code>{
+  &quot;timestamp&quot;: 1491553092124,
+  &quot;status&quot;: &quot;NOT_FOUND&quot;,
+  &quot;error&quot;: &quot;Not Found&quot;,
+  &quot;message&quot;: &quot;Employee not found for id - 100&quot;
+}
+</code></pre><h4 id="-get-employee-id-department-list"><code>GET</code> /employee/{id}/department/list</h4>
+<p><strong>HTTP 200</strong> : /employee/1/department/list</p>
+<pre><code>[
+  {
+    &quot;code&quot;: 12,
+    &quot;name&quot;: &quot;Services&quot;
+  },
+  {
+    &quot;code&quot;: 13,
+    &quot;name&quot;: &quot;Products&quot;
+  },
+  {
+    &quot;code&quot;: 16,
+    &quot;name&quot;: &quot;Finance&quot;
+  }
+]
+</code></pre><p><strong>HTTP 404</strong> : /employee/100/department/list</p>
+<pre><code>{
+  &quot;timestamp&quot;: 1491548677115,
+  &quot;status&quot;: &quot;NOT_FOUND&quot;,
+  &quot;error&quot;: &quot;Not Found&quot;,
+  &quot;message&quot;: &quot;Employee not found for id - 100&quot;
+}
+</code></pre><h4 id="-get-employee-list"><code>GET</code> /employee/list</h4>
+<p><em>Request params: name={name}, designation={designation}</em></p>
+<p><strong>HTTP 200</strong> : /employee/list?name=Snehal</p>
+<pre><code>[
+  {
+    &quot;id&quot;: 6,
+    &quot;name&quot;: &quot;Snehal&quot;,
+    &quot;designation&quot;: &quot;Manager&quot;,
+    &quot;departments&quot;: [
+      {
+        &quot;code&quot;: 13,
+        &quot;name&quot;: &quot;Products&quot;
+      }
+    ]
+  }
+]
+</code></pre><h4 id="-post-employee-create"><code>POST</code> /employee/create</h4>
+<p><em>Request params: name={name}, designation={designation}</em></p>
+<p><strong>HTTP 200</strong> : /employee/create (name=Karan, designation=Manager)</p>
+<pre><code>{
+  &quot;id&quot;: 999,
+  &quot;name&quot;: &quot;Karan&quot;,
+  &quot;designation&quot;: &quot;Manager&quot;,
+  &quot;departments&quot;: []
+}
+</code></pre><p><strong>HTTP 409</strong> : /employee/create (name=Satish, designation=Manager)</p>
+<pre><code>{
+  &quot;timestamp&quot;: 1491553397034,
+  &quot;status&quot;: &quot;CONFLICT&quot;,
+  &quot;error&quot;: &quot;Conflict&quot;,
+  &quot;message&quot; :&quot;Employee already exists for name - Satish&quot;
+}
+</code></pre><h4 id="-post-employee-id-department-add"><code>POST</code> /employee/{id}/department/add</h4>
+<p><em>Request params: department={departmentCode}</em></p>
+<p><strong>HTTP 200</strong> : /employee/1/department/add (department=12)</p>
+<pre><code>{
+  &quot;id&quot;: 1,
+  &quot;name&quot;: &quot;Vishal&quot;,
+  &quot;designation&quot;: &quot;Director&quot;,
+  &quot;departments&quot;: [
+    {
+      &quot;code&quot;: 10,
+      &quot;name&quot;: &quot;IT&quot;
+    },
+    {
+      &quot;code&quot;: 12,
+      &quot;name&quot;: &quot;Services&quot;
+    }
+  ]
+}
+</code></pre><p><strong>HTTP 404</strong> : /employee/100/department/add (department=13)</p>
+<pre><code>{
+  &quot;timestamp&quot;: 1491548677115,
+  &quot;status&quot;: &quot;NOT_FOUND&quot;,
+  &quot;error&quot;: &quot;Not Found&quot;,
+  &quot;message&quot;: &quot;Employee not found for id - 100&quot;
+}
+</code></pre><p><strong>HTTP 403</strong> : /employee/1/department/add (department=10)</p>
+<pre><code>{
+  &quot;timestamp&quot;: 1491556257871,
+  &quot;status&quot;: &quot;FORBIDDEN&quot;,
+  &quot;error&quot;: &quot;Forbidden&quot;,
+  &quot;message&quot; :&quot;Employee already has department code - 10&quot;
+}
+</code></pre><h4 id="-put-employee-id-"><code>PUT</code> /employee/{id}</h4>
+<p><em>Request params: name={name}, designation={designation} (Required all the parameters of the entity for PUT)</em></p>
+<p><strong>HTTP 200</strong> : /employee/5 (name=John, designation=Manager)</p>
+<pre><code>{
+  &quot;id&quot;: 5,
+  &quot;name&quot;: &quot;John&quot;,
+  &quot;designation&quot;: &quot;Manager&quot;,
+  &quot;departments&quot;: [
+    {
+      &quot;code&quot;: 12,
+      &quot;name&quot;: &quot;Services&quot;
+    },
+    {
+      &quot;code&quot;: 13,
+      &quot;name&quot;: &quot;Products&quot;
+    }
+  ]
+}
+</code></pre><p><strong>HTTP 403</strong> : /employee/1 (name=John, designation=Manager)</p>
+<pre><code>{
+  &quot;timestamp&quot;: 1491557483258,
+  &quot;status&quot;: &quot;FORBIDDEN&quot;,
+  &quot;error&quot;: &quot;Forbidden&quot;,
+  &quot;message&quot;: &quot;System can&#39;t change designation of the Director.&quot;
+}
+</code></pre><p><strong>HTTP 409</strong> : /employee/5 (name=Karan, designation=Manager)</p>
+<pre><code>{
+  &quot;timestamp&quot;: 1491557574187,
+  &quot;status&quot;: &quot;CONFLICT&quot;,
+  &quot;error&quot;: &quot;Conflict&quot;,
+  &quot;message&quot; :&quot;Employee already exists for name - Karan&quot;
+}
+</code></pre><h4 id="-patch-employee-id-"><code>PATCH</code> /employee/{id}</h4>
+<p><em>Request params: name={name} (Any subset of parameters of the entity for PATCH)</em></p>
+<p><strong>HTTP 200</strong> : /employee/5 (name=John)</p>
+<pre><code>{
+  &quot;id&quot;: 5,
+  &quot;name&quot;: &quot;John&quot;,
+  &quot;designation&quot;: &quot;Architect&quot;,
+  &quot;departments&quot;: [
+    {
+      &quot;code&quot;: 12,
+      &quot;name&quot;: &quot;Services&quot;
+    },
+    {
+      &quot;code&quot;: 13,
+      &quot;name&quot;: &quot;Products&quot;
+    }
+  ]
+}
+</code></pre><p><strong>HTTP 403</strong> : /employee/1 (name=John)</p>
+<pre><code>{
+  &quot;timestamp&quot;: 1491557483258,
+  &quot;status&quot;: &quot;FORBIDDEN&quot;,
+  &quot;error&quot;: &quot;Forbidden&quot;,
+  &quot;message&quot;: &quot;System can&#39;t change designation of the Director.&quot;
+}
+</code></pre><p><strong>HTTP 409</strong> : /employee/5 (name=Vilesh)</p>
+<pre><code>{
+  &quot;timestamp&quot;: 1491557574187,
+  &quot;status&quot;: &quot;CONFLICT&quot;,
+  &quot;error&quot;: &quot;Conflict&quot;,
+  &quot;message&quot; :&quot;Employee already exists for name - Vilesh&quot;
+}
+</code></pre><h4 id="-delete-employee-id-"><code>DELETE</code> /employee/{id}</h4>
+<p><strong>HTTP 200</strong> : /employee/1</p>
+<pre><code>{Empty Response Body}
+</code></pre><p><strong>HTTP 404</strong> /employee/100</p>
+<pre><code>{
+  &quot;timestamp&quot;: 1491553092124,
+  &quot;status&quot;: &quot;NOT_FOUND&quot;,
+  &quot;error&quot;: &quot;Not Found&quot;,
+  &quot;message&quot;: &quot;Employee not found for id - 100&quot;
+}
+</code></pre><h4 id="-delete-employee-id-department-departmentcode-"><code>DELETE</code> /employee/{id}/department/{departmentCode}</h4>
+<p><strong>HTTP 200</strong> : /employee/1/department/10</p>
+<pre><code>{
+  &quot;id&quot;: 1,
+  &quot;name&quot;: &quot;Vishal&quot;,
+  &quot;designation&quot;: &quot;Director&quot;,
+  &quot;departments&quot;: [],
+  &quot;created&quot;: 1491560326550,
+  &quot;modified&quot;: 1491560326550
+}
+</code></pre><p><strong>HTTP 404</strong> /employee/1/department/12</p>
+<pre><code>{
+  &quot;timestamp&quot;: 1491560238501,
+  &quot;status&quot;: &quot;NOT_FOUND&quot;,
+  &quot;error&quot;: &quot;Not Found&quot;,
+  &quot;message&quot;: &quot;Employee doesn&#39;t have department having code - 12&quot;
+}
+</code></pre><h3 id="how-to-run-the-project-only-if-curious-to-see-run-implementation-">How to RUN the project? (Only if curious to see/run implementation)</h3>
+<p>If you want to run project, its simple Java Spring Boot MVC project with Gradle. (Java 1.8 &amp; Gradle required to run)</p>
+<pre><code>$ gradle bootRun
+</code></pre><p>By default it runs usuing port <code>8080</code> on local.</p>
+<h3 id="implementation">Implementation</h3>
+<p>Code base already has example server side implementation of this RESTful services.</p>
+<h3 id="anything-to-say-">Anything to say?</h3>
+<p>Any suggestions or recommendations are most welcome.</p>
+<blockquote>
+<p>Please email me on vishal@techgrains.com with subject &quot;TGRESTful&quot; for easier reference and to have in proper mailbox folder. Thanks in advance!</p>
+</blockquote>
+<h2 id="license">License</h2>
+<h4 id="copyright-2017-techgrains-technologies">Copyright 2017 Techgrains Technologies</h4>
+<p>Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);<br>you may not use this file except in compliance with the License.<br>You may obtain a copy of the License at</p>
+<p><a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software<br>distributed under the License is distributed on an &quot;AS IS&quot; BASIS,<br>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<br>See the License for the specific language governing permissions and<br>limitations under the License.</p>
